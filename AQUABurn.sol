@@ -35,7 +35,8 @@ contract AQUABurn is KeeperCompatibleInterface, Ownable
     {
         uint oldInterval = interval;
         interval = _updateInterval;
-        emit UpdatedInterval(oldInterval, interval);        
+        emit UpdatedInterval(oldInterval, interval);
+        
     }
 
     function updateBurnAmount(uint _updateBurnAmount) public onlyOwner
@@ -68,19 +69,20 @@ contract AQUABurn is KeeperCompatibleInterface, Ownable
         return balance_;
     }
 
-    // function getMyBalance() public view returns(uint) 
-    // {
-    //     IERC20 token = IERC20(tokenAddress);
-    //     uint balance_ = token.balanceOf(msg.sender);
-    //     return balance_;
-    // }
-        
-    function deposit(uint amount) public payable
+     function getMyBalance() public view returns(uint) 
     {
         IERC20 token = IERC20(tokenAddress);
-        require(amount <= token.balanceOf(msg.sender), "you don't have enough balance.");
-        token.transferFrom(msg.sender, address(this), amount);
+        uint balance_ = token.balanceOf(msg.sender);
+        return balance_;
     }
+        
+    //function deposit(uint _amount) public payable
+    //{
+    //    IERC20 token = IERC20(tokenAddress);
+    //    require(_amount <= token.balanceOf(msg.sender), "you don't have enough balance.");
+    //    token.approve(address(this), _amount);
+    //    token.transferFrom(msg.sender, address(this), _amount);
+    //}
 
     function checkUpkeep(bytes calldata /* checkData */) external view override returns (bool upkeepNeeded, bytes memory /* performData */) 
     {
